@@ -13,4 +13,8 @@ function reverseInt(i) {
     }
 }
 
-module.exports = { reverseInt };
+function reverseInt2(i) {
+    return parseInt(i.toString().split('').reverse().join(''))  * Math.sign(i);
+}
+
+module.exports = { reverseInt, reverseInt2 };
