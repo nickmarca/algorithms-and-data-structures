@@ -1,6 +1,6 @@
 function maxChars(s) {
     const m = helper(s.split(''));
-    console.log(m);
+
     let e = [];
     for ([key, value] of m.entries()) {
         if(!e.length) {
