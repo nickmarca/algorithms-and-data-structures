@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^24.8.0",
+    "jest": "^25.3.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "@types/jest": "^25.2.1",
+    "prettier": "^1.18.2",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
   },
   "prettier": {
     "trailingComma": "es5",
