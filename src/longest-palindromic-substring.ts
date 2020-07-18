@@ -1,52 +1,74 @@
 export function longestPalindromicSubstring(s: string): string {
-    const array = s.split('');
-    let longest = [0, 0];
-
+    let longest = "";
     let pointerA = 0;
-   
-    while (pointerA < array.length) {
-        let pointerB = pointerA + 1;
+    const memo = new Map();
 
-        while (pointerB < array.length) {
+    while (pointerA < s.length) {
 
-            if (isPalindrome(array, pointerA, pointerB)) {
-                const [start, end] = longest;
-                if ((pointerB - pointerA) > (end - start)) {
-                    longest = [pointerA, pointerB + 1];
-                }
+        let pointerB = 0;
+
+        while (pointerB + pointerA < s.length) {
+            const palindrome = isPalindromeMemo(s, pointerB, pointerB + pointerA, memo);
+
+            if (palindrome.length > longest.length) {
+                longest = palindrome;
             }
 
-            pointerB++
+            pointerB++           
         }
 
         pointerA++;
     }
 
-    const [start, end] = longest;
-
-    if (!start) {
-      return "";
-    } else {
-        return s.slice(start, end);
-    }
+    return longest;
 }
 
+export function isPalindrome(str: string, pointerS: number, pointerE: number): string {
+    const length = pointerE - pointerS + 1;
+    const isEven = length % 2 === 0;
 
+    let pointerA = Math.floor(length / 2) + pointerS - 1;
+    let pointerB = isEven ? pointerA + 1 : pointerA + 2;
 
-export function isPalindrome(array: string[], pointerA: number, pointerB: number): boolean {
-    let counter = 0;
+    let palindrome = isEven ? "" : str[pointerA + 1];
 
-    while (pointerA <  pointerB) {
-        if (array[pointerA] !== array[pointerB - counter]) {
-            return false;
+    while (pointerA >= pointerS) {
+        if(str[pointerA] !== str[pointerB]) {
+            return palindrome;
         }
 
-        pointerA++;
-        counter++;
+        palindrome = str[pointerA] + palindrome + str[pointerB];
+
+        pointerA--;
+        pointerB++;
     }
 
-    return true;
+    return palindrome;
 }
 
-// time = O(nˆ3)
-// space = O(1)
+
+export function isPalindromeMemo(str: string, pointerS: number, pointerE: number, memo: Map<string, string>): string {
+    const length = pointerE - pointerS + 1;
+
+    if (length === 1) {
+        const palindrome = str[pointerS];
+        memo.set(`${pointerS}-${pointerE}`, palindrome);
+        return palindrome;
+    }
+
+    if (length === 2 && str[pointerS] === str[pointerE]) {
+        const palindrome = str[pointerS] + str[pointerE];
+        memo.set(`${pointerS}-${pointerE}`, palindrome);
+        return palindrome;
+    }
+
+    const previous = memo.get(`${pointerS + 1}-${pointerE - 1}`);
+
+    if (previous && str[pointerS] === str[pointerE]) {
+        const palindrome = str[pointerS] + previous + str[pointerE];
+        memo.set(`${pointerS}-${pointerE}`, palindrome);
+        return palindrome;
+    }
+
+    return "";
+}

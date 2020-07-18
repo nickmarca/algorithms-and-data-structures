@@ -12,7 +12,8 @@
         "allowSyntheticDefaultImports": true,
         "declaration": false,
         "sourceMap": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "downlevelIteration": true
     },
     "exclude": [
         "node_modules",

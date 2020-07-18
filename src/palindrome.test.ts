@@ -1,6 +1,26 @@
-const { reverse, isPalindrome, isPalindrome2 } = require("./Palindromes");
+import { reverse, isPalindrome, isPalindrome2, isPalindrome3 }  from "./palindrome";
+
+const testCases = new Map([
+    ["abc", false],
+    ["abba", true],
+    ["racecar", true],
+    ["friends", false],
+    ["eve", true],
+    ["abcdcba", true],
+    ["abcddcba", true],
+]);
 
 describe("Palindromes", () => {
+
+    for(const [str, res] of testCases) {
+        test(`${str} result should be ${res}`, () => {
+           expect(isPalindrome(str)).toBe(res);
+        });
+
+        test(`${str} result should be ${res}`, () => {
+           expect(isPalindrome3(str)).toBe(res);
+        });
+    }
 
     test("reverse string fn", () => {
        const a = "abc";
